@@ -8,25 +8,32 @@ namespace SomeTestLibrary
     public class Circle : IShape
     {
         private double _radius;
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public Circle(double r)
+        {
+            Validate(r);
+            Radius = r;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public double Radius
         {
-            get
-            {
-                return _radius;
-            }
+            get => _radius;
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("R","Radius should be non-negative");
+                Validate(value);
                 _radius = value;
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -36,17 +43,11 @@ namespace SomeTestLibrary
             var area = Math.PI * Radius * Radius;
             return area;
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="r"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public Circle(double r)
+
+        private void Validate(double r)
         {
-            if(r < 0)
-                throw new ArgumentOutOfRangeException("r","Radius should be non-negative");
-            Radius = r;
+            if (r < 0)
+                throw new ArgumentOutOfRangeException(nameof(r), "Radius should be non-negative");
         }
     }
 }
